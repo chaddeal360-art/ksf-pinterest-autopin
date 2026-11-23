@@ -1,8 +1,10 @@
 name: Auto-pin new posts to Pinterest
 
 on:
-  schedule:
-    - cron: "17 */4 * * *"   # every 4 hours, at :17
+  # Paused until the Pinterest app gets Standard access (Trial apps cannot create
+  # public pins). To turn on: add the secrets/variables from README, then uncomment.
+  # schedule:
+  #   - cron: "17 */4 * * *"   # every 4 hours, at :17
   workflow_dispatch:
     inputs:
       dry_run:

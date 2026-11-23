@@ -7,6 +7,14 @@ Cứ 4 giờ một lần, workflow đọc các bài đã đăng qua WordPress RE
 có link về bài viết. Bài đã pin được ghi vào `state/posted.json`. Trước khi đăng, script còn kiểm tra board: nếu bài đã có pin (do tài khoản khác hoặc đăng tay) thì bỏ qua, nên không bị pin trùng.
 Mỗi lần chạy pin tối đa 2 bài (bài cũ trước), vì vậy các bài cũ cũng sẽ được pin dần dần.
 
+## Trạng thái (23/11/2026)
+
+- App Pinterest **Kindred Space Finds Publisher** (ID 1635267) đã có sẵn, đang Trial, yêu cầu Standard đang chờ duyệt.
+- Lịch chạy tự động đang **tạm tắt** trong `.github/workflows/autopin.yml`. Khi Standard được duyệt: lấy refresh token qua OAuth
+  (redirect URI đã đăng ký: `https://kindredspacefinds.com/`), nhập secrets, rồi bỏ comment phần `schedule`.
+- Trong lúc chờ: Pinterest Auto-publish RSS đã bật cho feed `https://kindredspacefinds.com/category/meal-prep-recipes/feed/`
+  → board "Easy Meal Prep & Freezer Recipes". Script này kiểm tra board trước khi đăng nên sẽ bỏ qua bài đã có pin.
+
 ## Cài đặt (một lần)
 
 1. **Pinterest business + app**: vào https://developers.pinterest.com/apps/ → *Connect app*.
