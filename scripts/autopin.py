@@ -161,6 +161,27 @@ def fetch_posts(site):
     return posts
 
 
+def norm(url):
+    return (url or "").split("?")[0].split("#")[0].rstrip("/").replace("http://", "https://").lower()
+
+
+def board_links(board, token):
+    """Links of every pin already on a board (up to 1,000 pins)."""
+    links, bookmark = set(), None
+    for _ in range(10):
+        url = f"{PIN_API}/boards/{board}/pins?page_size=100" + (f"&bookmark={bookmark}" if bookmark else "")
+        status, data = http("GET", url, headers={"Authorization": f"Bearer {token}"})
+        if status != 200:
+            print(f"Could not list pins on board {board} ({status}); duplicate check skipped.",
+                  file=sys.stderr)
+            break
+        links.update(norm(p.get("link")) for p in data.get("items", []) if p.get("link"))
+        bookmark = data.get("bookmark")
+        if not bookmark:
+            break
+    return links
+
+
 def main():
     site = os.environ.get("SITE_URL", "https://kindredspacefinds.com").rstrip("/")
     dry = os.environ.get("DRY_RUN") == "1"
@@ -194,6 +215,24 @@ def main():
         return
 
     token = None if dry else access_token()
+
+    # Skip posts that already have a pin on the target board (for example one made
+    # by hand or by another tool), so nothing gets pinned twice.
+    existing = {}
+    if token:
+        for board in {b for _, _, b in candidates}:
+            existing[board] = board_links(board, token)
+        fresh = []
+        for post, pin, board in candidates:
+            if norm(post["link"]) in existing.get(board, set()):
+                done[str(post["id"])] = {"pin_id": None, "board_id": board, "link": post["link"],
+                                         "note": "already on board, skipped"}
+                print(f"Post {post['id']} already has a pin on board {board}; skipped.")
+            else:
+                fresh.append((post, pin, board))
+        save_state(state)
+        batch = fresh[:max_pins]
+
     for post, pin, board in batch:
         title = clean(post["title"]["rendered"], 100)
         description = clean(pin["description"] or post["excerpt"]["rendered"], 800)

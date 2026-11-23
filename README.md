@@ -4,7 +4,7 @@ Tự động tạo pin Pinterest cho bài mới trên **kindredspacefinds.com** 
 
 Cứ 4 giờ một lần, workflow đọc các bài đã đăng qua WordPress REST API, lấy ảnh pin dọc trong
 `<figure class="ksf-pinsave">` (ảnh, alt text, `data-pin-description`) rồi tạo pin bằng Pinterest API v5,
-có link về bài viết. Bài đã pin được ghi vào `state/posted.json`, nên không bao giờ bị pin hai lần.
+có link về bài viết. Bài đã pin được ghi vào `state/posted.json`. Trước khi đăng, script còn kiểm tra board: nếu bài đã có pin (do tài khoản khác hoặc đăng tay) thì bỏ qua, nên không bị pin trùng.
 Mỗi lần chạy pin tối đa 2 bài (bài cũ trước), vì vậy các bài cũ cũng sẽ được pin dần dần.
 
 ## Cài đặt (một lần)
