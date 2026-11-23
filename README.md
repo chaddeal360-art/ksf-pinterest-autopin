@@ -1,0 +1,36 @@
+# ksf-pinterest-autopin
+
+Tự động tạo pin Pinterest cho bài mới trên **kindredspacefinds.com** bằng GitHub Actions.
+
+Cứ 4 giờ một lần, workflow đọc các bài đã đăng qua WordPress REST API, lấy ảnh pin dọc trong
+`<figure class="ksf-pinsave">` (ảnh, alt text, `data-pin-description`) rồi tạo pin bằng Pinterest API v5,
+có link về bài viết. Bài đã pin được ghi vào `state/posted.json`, nên không bao giờ bị pin hai lần.
+Mỗi lần chạy pin tối đa 2 bài (bài cũ trước), vì vậy các bài cũ cũng sẽ được pin dần dần.
+
+## Cài đặt (một lần)
+
+1. **Pinterest business + app**: vào https://developers.pinterest.com/apps/ → *Connect app*.
+   Ghi lại **App ID** và **App secret key**. App mới được cấp *Trial access*: pin tạo ra chỉ mình bạn thấy
+   (sandbox). Muốn pin công khai phải xin **Standard access** (gửi video demo: đăng nhập OAuth và tạo pin).
+2. **Token**: trong trang app, tạo access token có quyền `boards:read`, `boards:write`, `pins:read`, `pins:write`.
+   Lưu lại **refresh token** (dùng được khoảng 1 năm; script tự đổi lấy access token mới mỗi lần chạy).
+3. **Board ID**: `curl -H "Authorization: Bearer <access token>" https://api.pinterest.com/v5/boards`
+   rồi lấy `id` của board muốn đăng.
+4. Trong repo GitHub: **Settings → Secrets and variables → Actions**
+   - *Secrets*: `PINTEREST_APP_ID`, `PINTEREST_APP_SECRET`, `PINTEREST_REFRESH_TOKEN`
+   - *Variables*: `PINTEREST_BOARD_ID`
+   - Tuỳ chọn: `BOARD_MAP` = `{"18":"<board công thức>","7":"<board bếp>"}` (key là category ID trên WordPress),
+     `ONLY_AFTER` = `2026-11-20` (bỏ qua bài cũ hơn ngày này), `MAX_PINS_PER_RUN`,
+     `PINTEREST_API_BASE` = `https://api-sandbox.pinterest.com/v5` để thử khi app còn Trial
+     (khi đó dùng secret `PINTEREST_ACCESS_TOKEN` là sandbox token).
+
+## Chạy thử
+
+**Actions → Auto-pin new posts to Pinterest → Run workflow**, để `dry_run = 1`: log sẽ in ra pin sẽ được tạo
+mà không đăng gì. Đổi thành `0` để đăng thật. Sau đó lịch 4 giờ/lần tự chạy.
+
+## Category ID trên site
+
+Kitchen & Pantry 7 · Bathroom Storage 8 · Closet Systems 9 · Workspace & Garage 10 · Save on Bills 12 ·
+Laundry & Cleaning 13 · Living Room & Bedroom 14 · Kids & Pets 15 · Home Maintenance 16 ·
+Moving & Decluttering 17 · Meal Prep & Recipes 18

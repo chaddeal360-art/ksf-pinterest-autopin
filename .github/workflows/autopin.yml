@@ -1,0 +1,54 @@
+name: Auto-pin new posts to Pinterest
+
+on:
+  schedule:
+    - cron: "17 */4 * * *"   # every 4 hours, at :17
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Only print what would be pinned (1 = yes)"
+        default: "1"
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: autopin
+  cancel-in-progress: false
+
+jobs:
+  pin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Create pins
+        env:
+          PINTEREST_APP_ID: ${{ secrets.PINTEREST_APP_ID }}
+          PINTEREST_APP_SECRET: ${{ secrets.PINTEREST_APP_SECRET }}
+          PINTEREST_REFRESH_TOKEN: ${{ secrets.PINTEREST_REFRESH_TOKEN }}
+          PINTEREST_ACCESS_TOKEN: ${{ secrets.PINTEREST_ACCESS_TOKEN }}
+          PINTEREST_BOARD_ID: ${{ vars.PINTEREST_BOARD_ID }}
+          PINTEREST_API_BASE: ${{ vars.PINTEREST_API_BASE }}
+          BOARD_MAP: ${{ vars.BOARD_MAP }}
+          SITE_URL: ${{ vars.SITE_URL || 'https://kindredspacefinds.com' }}
+          MAX_PINS_PER_RUN: ${{ vars.MAX_PINS_PER_RUN || '2' }}
+          ONLY_AFTER: ${{ vars.ONLY_AFTER }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || vars.DRY_RUN || '0' }}
+        run: python scripts/autopin.py
+
+      - name: Save pinned-post list
+        run: |
+          if [ -n "$(git status --porcelain state)" ]; then
+            git config user.name "ksf-autopin"
+            git config user.email "actions@users.noreply.github.com"
+            git add state/posted.json
+            git commit -m "Record pinned posts"
+            git push
+          fi
