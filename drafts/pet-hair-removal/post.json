@@ -8,13 +8,13 @@
   "meta_description": "Pet hair removal that keeps up: brush first, a 15-minute daily sweep, the right tool for each surface, laundry tricks and a weekly reset.",
   "hero": {
     "unsplash": "1627376617965-b8c29ca91aca",
-    "crop": [0, 0.42, 1, 0.44],
+    "crop": [0, 0.30, 1, 0.44],
     "alt": "A golden retriever puppy asleep on a dark blue sofa",
     "filename": "pet-hair-golden-puppy-sofa.jpg"
   },
   "pin": {
     "unsplash": "1627376617965-b8c29ca91aca",
-    "crop": [0, 0.33, 1, 0.587],
+    "crop": [0, 0.24, 1, 0.587],
     "kicker": "Pets + Cleaning",
     "title_lines": ["Pet Hair Everywhere?", "A 15-Minute Routine"],
     "subtitle": "Brush first, then the tools that actually pick it up",
