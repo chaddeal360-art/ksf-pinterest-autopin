@@ -38,4 +38,4 @@ after-Christmas declutter (declutter-after-christmas).
 
 ## Care log
 
-- 2026-11-24: Published /pet-food-storage/ (post 1346, media 1344 hero, 1345 pin). Checked live page: hero, pin, table, FAQ, related cards render. Rewrote plan to drop 4 duplicate seasonal titles and add kitchen/food titles. Pinterest RSS auto-publish now has 3 feeds: meal-prep-recipes → "Easy Meal Prep & Freezer Recipes", kitchen-pantry → "Kitchen & Pantry Organization", kids-pets → "Home Organization Ideas" (saved with user OK).
+- 2026-11-24: Published /pet-food-storage/ (post 1346, media 1344 hero, 1345 pin). Checked live page: hero, pin, table, FAQ, related cards render. Rewrote plan to drop 4 duplicate seasonal titles and add kitchen/food titles. Pinterest RSS auto-publish now has 3 feeds: meal-prep-recipes → "Easy Meal Prep & Freezer Recipes", kitchen-pantry → "Kitchen & Pantry Organization", kids-pets → new board "Pet & Kid-Friendly Home Ideas" (created and saved with user OK).
