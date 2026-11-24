@@ -18,6 +18,7 @@ Environment
   MAX_POSTS          posts per run, default 1
   DRY_RUN            "1" = build images into out/ and print, publish nothing
   ONLY_SLUG          optional: handle just this draft (ignores its date)
+  CHECK_LOGIN        "1" = only test the WordPress login, publish nothing
 """
 import base64
 import datetime as dt
@@ -238,6 +239,16 @@ def main():
     today = saigon_today()
     state = load_state()
     done = state.setdefault("published", {})
+
+    if os.environ.get("CHECK_LOGIN") == "1":
+        pw = os.environ.get("WP_APP_PASSWORD", "").strip()
+        if not pw:
+            sys.exit("WP_APP_PASSWORD is not set.")
+        st, me = WP(site, os.environ.get("WP_USER", "admin"), pw).json("GET", "users/me?context=edit")
+        if st != 200:
+            sys.exit(f"WordPress login failed ({st}): {str(me)[:300]}")
+        print(f"WordPress login OK as {me.get('username')} ({', '.join(me.get('roles', []))}).")
+        return
 
     ready = [p for p in drafts()
              if p["slug"] not in done and (p["slug"] == only if only else p.get("date", "9999") <= today)]

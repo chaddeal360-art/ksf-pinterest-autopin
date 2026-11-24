@@ -13,6 +13,10 @@ on:
         description: "Optional: publish just this draft now, ignoring its date"
         default: ""
         required: false
+      check_login:
+        description: "Only test the WordPress login (1 = yes)"
+        default: "0"
+        required: false
 
 permissions:
   contents: write
@@ -42,6 +46,7 @@ jobs:
           MAX_POSTS: "1"
           DRY_RUN: ${{ github.event.inputs.dry_run || '0' }}
           ONLY_SLUG: ${{ github.event.inputs.only_slug }}
+          CHECK_LOGIN: ${{ github.event.inputs.check_login || '0' }}
         run: python scripts/publish.py
 
       - name: Keep preview images
