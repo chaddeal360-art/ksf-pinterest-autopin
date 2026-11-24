@@ -1,7 +1,9 @@
 # Kindred Space Finds — content plan
 
-The scheduled task reads this file on every run, publishes the first row whose date has arrived
-and whose status is `planned`, then updates the row (status, URL, notes) and pushes this file.
+Publishing runs on GitHub, no laptop needed: the scheduled Claude task writes each row as a draft in
+drafts/<slug>/ a few days ahead (status `drafted`), and the "Publish ready drafts to WordPress"
+workflow (.github/workflows/publish.yml, daily 08:23 Saigon) builds the images and publishes one due
+draft per day using the WP_APP_PASSWORD secret. Pinterest picks new posts up from the category RSS feeds.
 Dates are Asia/Saigon. Before writing, always search the site for a near-duplicate post; tighten
 the title or angle (or swap the row) if one exists.
 
@@ -15,9 +17,9 @@ the title or angle (or swap the row) if one exists.
   Then `<!-- /wp:html -->` and `<!-- wp:block {"ref":103} /-->`.
 - Pin image 1000x1500 JPG: photo top 0-881, cream #F5F1E6 panel, rust kicker caps 26px, title Georgia bold 70px #1E3A2F
   (two lines), grey 30px subtitle, footer bar #203A31 from y=1376 with "K" logo tile + kindredspacefinds.com.
-  Build it with a canvas in the wp-admin tab and upload through /wp-json/wp/v2/media as image/jpeg; check it decodes.
+  scripts/publish.py builds it with Pillow (fonts/ Gelasio + Arimo) and uploads it as JPG.
 - Set featured_media to the hero, Yoast focus keyword + meta description, excerpt, categories.
-- WordPress admin is logged in on the laptop Chrome profile shown as "Browser 3" (Google account a16cuong2025).
+- For hands-on fixes from a live chat: WordPress admin is logged in on the laptop Chrome profile of Google account a16cuong2025.
 
 | # | Date | Category (WP id) | Title | Status | URL | Notes |
 |---|------|------------------|-------|--------|-----|-------|
