@@ -42,6 +42,7 @@ jobs:
           SITE_URL: ${{ vars.SITE_URL || 'https://kindredspacefinds.com' }}
           MAX_PINS_PER_RUN: ${{ vars.MAX_PINS_PER_RUN || '2' }}
           ONLY_AFTER: ${{ vars.ONLY_AFTER }}
+          PRIORITY_CATEGORIES: ${{ vars.PRIORITY_CATEGORIES || '18,19,20,7' }}
           DRY_RUN: ${{ github.event.inputs.dry_run || vars.DRY_RUN || '0' }}
         run: python scripts/autopin.py
 

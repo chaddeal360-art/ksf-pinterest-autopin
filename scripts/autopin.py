@@ -18,6 +18,7 @@ Environment variables
   ONLY_AFTER              Optional ISO date: ignore posts published before it.
   PINTEREST_API_BASE      Set to https://api-sandbox.pinterest.com/v5 to test
                           with a Trial-access app (sandbox token).
+  PRIORITY_CATEGORIES     Category IDs pinned first, default "18,19,20,7".
   DRY_RUN                 "1" to print what would be pinned without posting.
 """
 import base64
@@ -207,8 +208,16 @@ def main():
                      default_board)
         candidates.append((post, pin, board))
 
-    # Oldest first, so a backlog goes out in publishing order.
-    candidates.sort(key=lambda c: c[0].get("date_gmt", ""))
+    # Priority categories first (food and kitchen by default: Meal Prep 18,
+    # Freezer Meals 19, Gifts in a Jar 20, Kitchen & Pantry 7), then oldest first.
+    prio = [c.strip() for c in os.environ.get("PRIORITY_CATEGORIES", "18,19,20,7").split(",") if c.strip()]
+
+    def rank(c):
+        cats = [str(x) for x in c[0].get("categories", [])]
+        r = min((prio.index(x) for x in cats if x in prio), default=len(prio))
+        return (r, c[0].get("date_gmt", ""))
+
+    candidates.sort(key=rank)
     batch = candidates[:max_pins]
     print(f"{len(candidates)} post(s) waiting for a pin; pinning {len(batch)} this run.")
     if not batch:
