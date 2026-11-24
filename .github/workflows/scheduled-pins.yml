@@ -1,0 +1,59 @@
+name: Post scheduled pins
+
+on:
+  schedule:
+    # Twice a day, 1 pin each run: 13:17 UTC (8:17 a.m. US Eastern) and
+    # 01:17 UTC (8:17 p.m. US Eastern). Until the Pinterest secrets are set,
+    # each run only logs what is due and exits without error.
+    - cron: "17 1,13 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Only print what would be posted (1 = yes)"
+        default: "1"
+        required: false
+      today:
+        description: "Pretend today is this date (YYYY-MM-DD), for testing"
+        default: ""
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: autopin
+  cancel-in-progress: false
+
+jobs:
+  pin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Post pins that are due
+        env:
+          PINTEREST_APP_ID: ${{ secrets.PINTEREST_APP_ID }}
+          PINTEREST_APP_SECRET: ${{ secrets.PINTEREST_APP_SECRET }}
+          PINTEREST_REFRESH_TOKEN: ${{ secrets.PINTEREST_REFRESH_TOKEN }}
+          PINTEREST_ACCESS_TOKEN: ${{ secrets.PINTEREST_ACCESS_TOKEN }}
+          PINTEREST_API_BASE: ${{ vars.PINTEREST_API_BASE }}
+          BOARD_IDS: ${{ vars.BOARD_IDS }}
+          MAX_SCHEDULED_PER_RUN: ${{ vars.MAX_SCHEDULED_PER_RUN || '1' }}
+          TODAY: ${{ github.event.inputs.today }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || '0' }}
+        run: python scripts/schedule_pins.py
+
+      - name: Save posted-pin list
+        run: |
+          if [ -n "$(git status --porcelain state)" ]; then
+            git config user.name "ksf-autopin"
+            git config user.email "actions@users.noreply.github.com"
+            git add state/scheduled.json
+            git commit -m "Record scheduled pins"
+            git push
+          fi
