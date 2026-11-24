@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-26",
+  "title": "Pet Hair Everywhere? A 15-Minute Daily Routine and the Tools That Actually Pick It Up",
+  "slug": "pet-hair-removal",
+  "categories": [15, 13],
+  "excerpt": "Brush the pet, not just the couch: a 15-minute daily routine for pet hair, the tools that work on fabric, floors and laundry, and a weekly reset that keeps hair from building up.",
+  "focus_keyword": "pet hair removal",
+  "meta_description": "Pet hair removal that keeps up: brush first, a 15-minute daily sweep, the right tool for each surface, laundry tricks and a weekly reset.",
+  "hero": {
+    "unsplash": "1627376617965-b8c29ca91aca",
+    "crop": [0, 0.42, 1, 0.44],
+    "alt": "A golden retriever puppy asleep on a dark blue sofa",
+    "filename": "pet-hair-golden-puppy-sofa.jpg"
+  },
+  "pin": {
+    "unsplash": "1627376617965-b8c29ca91aca",
+    "crop": [0, 0.33, 1, 0.587],
+    "kicker": "Pets + Cleaning",
+    "title_lines": ["Pet Hair Everywhere?", "A 15-Minute Routine"],
+    "subtitle": "Brush first, then the tools that actually pick it up",
+    "alt": "Pet hair removal pin: a golden retriever puppy on a sofa with a 15-minute daily routine",
+    "description": "Pet hair everywhere? Brush your pet first, run a 15-minute daily sweep of the couch, floors and bed, use the right tool for each surface and add a weekly reset so hair never piles up."
+  }
+}

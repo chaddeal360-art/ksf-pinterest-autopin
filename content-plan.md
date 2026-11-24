@@ -22,7 +22,7 @@ the title or angle (or swap the row) if one exists.
 | # | Date | Category (WP id) | Title | Status | URL | Notes |
 |---|------|------------------|-------|--------|-----|-------|
 | 1 | 2026-11-24 | Kids & Pets (15) + Kitchen & Pantry (7) | Pet Food Storage: 7 Ways to Keep Kibble Fresh, Bug-Free and Off the Kitchen Floor | published | https://kindredspacefinds.com/pet-food-storage/ | post 1346 |
-| 2 | 2026-11-26 | Kids & Pets (15) + Laundry & Cleaning (13) | Pet Hair Everywhere? A 15-Minute Daily Routine and the Tools That Actually Pick It Up | planned | | |
+| 2 | 2026-11-26 | Kids & Pets (15) + Laundry & Cleaning (13) | Pet Hair Everywhere? A 15-Minute Daily Routine and the Tools That Actually Pick It Up | drafted | | drafts/pet-hair-removal |
 | 3 | 2026-11-28 | Kitchen & Pantry (7) | Holiday Baking Pantry: What to Stock Before December, How Long Each Keeps and Where It Goes | planned | | link brownie/cookie-mix-in-a-jar posts |
 | 4 | 2026-11-30 | Kids & Pets (15) | Litter Box Hideaway Ideas: 9 Spots That Cut the Smell (and the Ones Cats Refuse to Use) | planned | | |
 | 5 | 2026-12-02 | Kitchen & Pantry (7) | Spice Cabinet Organization: 6 Setups That Fit Your Cabinet, Plus How Long Spices Really Last | planned | | |
