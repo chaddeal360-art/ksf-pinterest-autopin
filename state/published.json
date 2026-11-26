@@ -2,9 +2,21 @@
   "published": {
     "pet-food-storage": {
       "link": "https://kindredspacefinds.com/pet-food-storage/",
-      "media": {"HERO": 1344, "PIN": 1345},
+      "media": {
+        "HERO": 1344,
+        "PIN": 1345
+      },
       "note": "published by hand from Chrome on 2026-11-24",
       "post_id": 1346
+    },
+    "pet-hair-removal": {
+      "link": "https://kindredspacefinds.com/pet-hair-removal/",
+      "media": {
+        "HERO": 1364,
+        "PIN": 1365
+      },
+      "post_id": 1366,
+      "published_at": "2026-11-26T02:28:15Z"
     }
   }
 }
